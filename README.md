@@ -1,4 +1,4 @@
-# Reids 协议解析器
+# Redis 协议解析器
 
 **A basic Redis protocol parser**
 
@@ -19,3 +19,9 @@ Redis 协议具体请见 [Redis Protocol specification
 
 [1, 2, 3]
 ```
+
+## 运行测试用例
+
+1. 安装依赖: `redis`, `nose`
+2. 进入项目所在目录
+3. 在 terminal 中执行 `nosetests` 命令

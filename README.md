@@ -22,6 +22,6 @@ Redis 协议具体请见 [Redis Protocol specification
 
 ## 运行测试用例
 
-1. 安装依赖: `redis`, `nose`
+1. 安装依赖: `nose`
 2. 进入项目所在目录
 3. 在 terminal 中执行 `nosetests` 命令

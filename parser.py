@@ -1,4 +1,7 @@
 class ProtocolList:
+    """
+    用于保存将字符串解析为一个 list 后的数据
+    """
     def __init__(self, input_string):
         self.list = input_string.split('\r\n')
         self.index = 0
@@ -16,13 +19,21 @@ class ProtocolList:
 
 
 def parsed(input_string):
+    """
+    输入: Redis 字符串
+    输出: 解析后的数据
+    :param input_string:
+    :return:
+    """
     protocol_list = ProtocolList(input_string)
     output = parse(protocol_list)
+    print(output)
     return output
 
 
 def parse(protocol_list):
     """
+    实际解析 ProtocolList 的函数
     Input example:
     *2\r\n
     $3\r\n
@@ -44,6 +55,7 @@ def parse(protocol_list):
         elif line.startswith('$'):
             output = parse_string_bulk(pl)
         elif line.startswith('*'):
+            # 数组中元素的数量
             number_of_elements = int(line[1:])
             output = parse_array(pl, number_of_elements)
         else:
@@ -62,6 +74,7 @@ def parse_string_simple(line):
 def parse_string_bulk(protocol_list):
     pl = protocol_list
     line = pl.read_line_previous()
+    print('line==', line)
     length = int(line[1:])
     if length == 0:
         string = ''
@@ -92,6 +105,7 @@ def parse_array(protocol_list, number_of_elements):
             output.append(parse_integer(line))
         elif line.startswith('$'):
             output.append(parse_string_bulk(pl))
+        # 当存在嵌套的数组时, 递归地调用 `parse_array` 函数
         elif line.startswith('*'):
             n = int(line[1:])
             output.append(parse_array(pl, n))
